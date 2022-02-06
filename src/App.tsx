@@ -19,7 +19,7 @@ function App() {
             <Route path='/country' element={<Country />} />
             <Route path='/about' element={<About />} />
 
-            {/*  */}
+            {/* redirect any unexists route to NotFound */}
 
             <Route path='/404' element={<NotFound />} />
             <Route path='/*' element={<NotFound />} />
