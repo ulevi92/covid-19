@@ -1,28 +1,32 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { useThemeProviderCtx } from "../../context/ThemeProviderCtx";
+//import mui components
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+
+//import mui icon
 import MenuIcon from "@mui/icons-material/Menu";
+//import linkObject
 import { linksObject } from "./navbar.helper";
 
-const Navbar = () => {
-  const { lightMode, themeDispatch } = useThemeProviderCtx();
+import styles from "./Navbar.module.scss";
+import { ThemeActionType } from "../../context/theme/ThemeReducer";
+import { LoadingContext } from "../../context/loading/LoadingProvider";
+import { useThemeProviderCtx } from "../../context/theme/ThemeProviderCtx";
 
+const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const { loading, setLoading } = LoadingContext();
+  const { lightMode, setLightMode } = useThemeProviderCtx();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,23 +37,28 @@ const Navbar = () => {
   const handleCloseNavMenu = () => setAnchorElNav(null);
 
   const renderLinks = linksObject.map(({ id, link }) => (
-    <Link to={`/${link}`} key={id}>
+    <Link to={`/${link}`} key={id} className={styles.noneUnderLine}>
       <MenuItem onClick={handleCloseNavMenu}>
-        <Typography textAlign='center'>{link.toUpperCase()}</Typography>
+        <Typography textAlign='center' sx={{ fontWeight: 700 }}>
+          {link.toUpperCase()}
+        </Typography>
       </MenuItem>
     </Link>
   ));
 
   const renderLinksButtons = linksObject.map(({ id, link }) => (
-    <Link to={`/${link}`} key={id}>
+    <Link to={`/${link}`} key={id} className={styles.noneUnderLine}>
       <Button
         onClick={handleCloseNavMenu}
-        sx={{ my: 2, color: "white", display: "block" }}
+        sx={{ my: 2, color: "white", display: "block", fontWeight: 700 }}
       >
         {link.toUpperCase()}
       </Button>
     </Link>
   ));
+
+  const onSwitchModeClick = () =>
+    lightMode ? setLightMode(true) : setLightMode(false);
 
   return (
     <AppBar position='static'>
@@ -66,6 +75,7 @@ const Navbar = () => {
                 md: "flex",
                 cursor: "pointer",
                 fontFamily: "Offside",
+                fontWeight: "900",
               },
             }}
             onClick={() => navigate("/")}
@@ -125,6 +135,16 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {renderLinksButtons}
+          </Box>
+
+          <Box>
+            <Button
+              variant='contained'
+              color='info'
+              onClick={onSwitchModeClick}
+            >
+              {lightMode ? "Switch to Dark" : "Switch to light"}
+            </Button>
           </Box>
         </Toolbar>
       </Container>

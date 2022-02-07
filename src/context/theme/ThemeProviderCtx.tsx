@@ -1,13 +1,15 @@
 import { createContext, FC, useContext, useReducer } from "react";
-import { themeReducer, ThemeReducerType } from "./ThemeReducer";
+import {
+  ThemeActionType,
+  themeReducer,
+} from "./ThemeReducer";
 
 export interface ThemeProviderState {
   lightMode: boolean;
-  currentMode: "light" | "dark";
 }
 
 interface ContextProps extends ThemeProviderState {
-  themeDispatch: React.Dispatch<ThemeReducerType>;
+  setLightMode: (condition: boolean) => void;
 }
 
 const Context = createContext<ContextProps | null>(null);
@@ -23,13 +25,18 @@ export const useThemeProviderCtx = () => {
 const ThemeProviderCtx: FC = ({ children }) => {
   const initialState: ThemeProviderState = {
     lightMode: true,
-    currentMode: "light",
   };
 
   const [themeState, themeDispatch] = useReducer(themeReducer, initialState);
 
+  const setLightMode = (condition: boolean) => {
+    condition
+      ? themeDispatch({ type: ThemeActionType.SET_DARK, payload: false })
+      : themeDispatch({ type: ThemeActionType.SET_LIGHT, payload: true });
+  };
+
   return (
-    <Context.Provider value={{ ...themeState, themeDispatch }}>
+    <Context.Provider value={{ ...themeState, setLightMode }}>
       {children}
     </Context.Provider>
   );

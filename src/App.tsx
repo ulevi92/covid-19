@@ -1,10 +1,10 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/layouts/Navbar";
-import { useThemeProviderCtx } from "./context/ThemeProviderCtx";
+import { useThemeProviderCtx } from "./context/theme/ThemeProviderCtx";
 import NotFound from "./pages/404";
 import About from "./pages/About";
-import Country from "./pages/Country";
+import Countries from "./pages/Countries";
 import Home from "./pages/Home";
 import { darkTheme, lightTheme } from "./theme/theme";
 
@@ -20,7 +20,7 @@ function App() {
 
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/country' element={<Country />} />
+            <Route path='/countries' element={<Countries />} />
             <Route path='/about' element={<About />} />
 
             {/* redirect any unexists route to NotFound */}
