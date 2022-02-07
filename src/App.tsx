@@ -1,5 +1,6 @@
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/layouts/Navbar";
 import { useThemeProviderCtx } from "./context/ThemeProviderCtx";
 import NotFound from "./pages/404";
 import About from "./pages/About";
@@ -12,8 +13,11 @@ function App() {
 
   return (
     <>
-      <Router>
-        <ThemeProvider theme={lightMode ? lightTheme : darkTheme}>
+      <ThemeProvider theme={lightMode ? lightTheme : darkTheme}>
+      <CssBaseline />
+        <Router>
+          <Navbar />
+
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/country' element={<Country />} />
@@ -24,8 +28,8 @@ function App() {
             <Route path='/404' element={<NotFound />} />
             <Route path='/*' element={<NotFound />} />
           </Routes>
-        </ThemeProvider>
-      </Router>
+        </Router>
+      </ThemeProvider>
     </>
   );
 }
