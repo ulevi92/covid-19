@@ -1,5 +1,6 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Navbar from "./components/layouts/Navbar";
 import { useThemeProviderCtx } from "./context/theme/ThemeProviderCtx";
 import NotFound from "./pages/404";
@@ -14,7 +15,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={lightMode ? lightTheme : darkTheme}>
-      <CssBaseline />
+        <CssBaseline />
         <Router>
           <Navbar />
 
@@ -29,6 +30,7 @@ function App() {
             <Route path='/*' element={<NotFound />} />
           </Routes>
         </Router>
+        <ToastContainer autoClose={2500} />
       </ThemeProvider>
     </>
   );
