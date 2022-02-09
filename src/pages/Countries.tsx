@@ -1,21 +1,23 @@
-import { useEffect } from "react";
-import { LoadingContext } from "../context/loading/LoadingProvider";
-import useFetchAll from "../hooks/useFetchAll";
-import useFetchCountries from "../hooks/useFetchCountries";
+import { useEffect, useRef, useState } from "react";
+import PagesButtons from "../components/countries/PagesButtons";
+import { GetCountriesDataType } from "../components/types/FetchTypes";
+import { useStoreContext } from "../context/store/StoreProvider";
 
 const Countries = () => {
-  const { loading } = LoadingContext();
+  const { loading, countries, onPageClick, totalPages } = useStoreContext();
 
-  const countries = useFetchCountries(
-    `https://disease.sh/v3/covid-19/countries`,
-    {}
+  // const renderPageButtons = totalPages!
+
+  return (
+    <>
+      <h1>{loading ? "Loading..." : "Countries"}</h1>
+
+      <br />
+      <br />
+
+      <PagesButtons />
+    </>
   );
-
-  console.log(countries.data);
-
-  if (loading) return <>Loading...</>;
-
-  return <>Country</>;
 };
 
 export default Countries;
