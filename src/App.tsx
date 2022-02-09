@@ -6,8 +6,10 @@ import { useThemeProviderCtx } from "./context/theme/ThemeProviderCtx";
 import NotFound from "./pages/404";
 import About from "./pages/About";
 import Countries from "./pages/Countries";
+import Country from "./components/countries/Country";
 import Home from "./pages/Home";
 import { darkTheme, lightTheme } from "./theme/theme";
+import CountriesPage from "./components/countries/CountriesPage";
 
 function App() {
   const { lightMode } = useThemeProviderCtx();
@@ -22,6 +24,9 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/countries' element={<Countries />} />
+            <Route path='/countries/:pageNum' element={<Countries />} />
+            <Route path='/country/:countryName' element={<Country />} />
+
             <Route path='/about' element={<About />} />
 
             {/* redirect any unexists route to NotFound */}

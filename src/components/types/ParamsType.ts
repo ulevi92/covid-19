@@ -1,1 +1,4 @@
-export type ParamsType = {}
+export type ParamsType = {
+  pageNum: string;
+  countryName: string;
+};

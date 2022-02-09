@@ -19,13 +19,11 @@ import { linksObject } from "./navbar.helper";
 
 import styles from "./Navbar.module.scss";
 import { ThemeActionType } from "../../context/theme/ThemeReducer";
-import { LoadingContext } from "../../context/loading/LoadingProvider";
 import { useThemeProviderCtx } from "../../context/theme/ThemeProviderCtx";
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
-  const { loading, setLoading } = LoadingContext();
   const { lightMode, setLightMode } = useThemeProviderCtx();
 
   const location = useLocation();

@@ -1,8 +1,6 @@
 import { toast } from "react-toastify";
-import {
-  GetAllDataType,
-  GetCountriesDataType,
-} from "../components/types/FetchTypes";
+import { GetAllDataType, GetCountriesDataType } from "../components/types/FetchTypes";
+
 
 export const fetchGlobal = async () => {
   try {

@@ -20,17 +20,17 @@ type TotalPagesType = {
 };
 
 export interface StoreState {
-  countries?: GetCountriesDataType[];
-  global?: GetAllDataType;
+  countries: GetCountriesDataType[] | null;
+  global: GetAllDataType | null;
   perPage: number;
   loading: boolean;
   currentPage: number;
-  totalPages?: TotalPagesType[];
+  totalPages: TotalPagesType[] | null;
   offset: number;
 }
 
 interface ContextProps extends StoreState {
-  onPageClick: (e: React.ChangeEvent<HTMLButtonElement>) => void;
+  onPageClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Context = createContext<ContextProps | null>(null);
@@ -49,8 +49,11 @@ const StoreProvider: FC = ({ children }) => {
   const [state, setState] = useState<StoreState>({
     loading: true,
     perPage: 10,
-    currentPage: 0,
+    currentPage: 1,
     offset: 0,
+    countries: null,
+    global: null,
+    totalPages: null,
   });
 
   const { perPage } = state;
@@ -83,8 +86,8 @@ const StoreProvider: FC = ({ children }) => {
     };
   }, [perPage]);
 
-  const onPageClick = (e: React.ChangeEvent<HTMLButtonElement>) => {
-    const currentPage = +e.target.value;
+  const onPageClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const currentPage = +e.currentTarget.innerText;
     const offset = currentPage * perPage;
 
     setState((prevState) => ({
