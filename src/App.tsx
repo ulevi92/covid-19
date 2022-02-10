@@ -10,9 +10,15 @@ import Country from "./components/countries/Country";
 import Home from "./pages/Home";
 import { darkTheme, lightTheme } from "./theme/theme";
 import CountriesPage from "./components/countries/CountriesPage";
+import { useStoreContext } from "./context/store/StoreProvider";
+import Spinner from "./components/shared/Spinner";
 
 function App() {
   const { lightMode } = useThemeProviderCtx();
+
+  const { loading } = useStoreContext();
+
+  if (loading) return <Spinner />;
 
   return (
     <>

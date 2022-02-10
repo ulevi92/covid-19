@@ -1,4 +1,3 @@
-import Container from "@mui/material/Container";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import React, { FC } from "react";
@@ -6,38 +5,79 @@ import { useStoreContext } from "../../context/store/StoreProvider";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { ParamsType } from "../types/ParamsType";
+import { useNavigate } from "react-router-dom";
 
 const PagesButtons: FC = () => {
-  const { totalPages, currentPage, onPageClick, offset, perPage } =
+  const { totalPages, currentPage, onPageClick, setCurrentPage } =
     useStoreContext();
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const params = useParams<ParamsType>();
 
-  const onBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onPageNumClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     onPageClick(e);
+    navigate(`/countries/${e.currentTarget.innerText}`);
   };
 
-  const renderButtons =
-    totalPages &&
-    totalPages.slice(offset, perPage - 5).map((page) => {
-      console.log(offset);
+  const RenderButtons = () => {
+    if (totalPages) {
+      const lastPage = totalPages.length;
 
-      return (
-        <Button key={page.id} disabled={false} onClick={onBtnClick}>
-          {page.number}
-        </Button>
-      );
-    })!;
+      if (currentPage > lastPage - 10 || currentPage === lastPage) {
+        return totalPages
+          .slice(lastPage - 10, lastPage + 1)
+          .map(({ id, number }) => (
+            <Button
+              key={id}
+              onClick={onPageNumClick}
+              disabled={number === currentPage}
+            >
+              {number}
+            </Button>
+          ));
+      }
+
+      if (currentPage < lastPage || currentPage === 1) {
+        return totalPages
+          .slice(currentPage - 1, lastPage)
+          .slice(0, 10)
+          .map(({ id, number }) => (
+            <Button
+              key={id}
+              onClick={onPageNumClick}
+              disabled={number === currentPage}
+            >
+              {number}
+            </Button>
+          ));
+      }
+    }
+
+    return <></>;
+  };
+
+  const onPrevBtnClick = () => {
+    setCurrentPage(currentPage - 1);
+    navigate(`/countries/${currentPage - 1}`);
+  };
+
+  const onNextBtnClick = () => {
+    setCurrentPage(currentPage + 1);
+    navigate(`/countries/${currentPage + 1}`);
+  };
 
   return (
     <ButtonGroup color='primary' variant='contained'>
-      <Button startIcon={<ArrowBackIosNewIcon />} />
-      {renderButtons}
-      <Button endIcon={<ArrowForwardIosIcon />} />
+      <Button
+        disabled={currentPage === 1}
+        startIcon={<ArrowBackIosNewIcon />}
+        onClick={onPrevBtnClick}
+      />
+      {RenderButtons()}
+      <Button
+        disabled={currentPage === totalPages?.length}
+        endIcon={<ArrowForwardIosIcon />}
+        onClick={onNextBtnClick}
+      />
     </ButtonGroup>
   );
 };
