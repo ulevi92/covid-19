@@ -49,7 +49,7 @@ const StoreProvider: FC = ({ children }) => {
 
   const [state, setState] = useState<StoreState>({
     loading: true,
-    perPage: 9,
+    perPage: 8,
     currentPage: 1,
     offset: 0,
     countries: null,
@@ -89,7 +89,7 @@ const StoreProvider: FC = ({ children }) => {
 
   const onPageClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const currentPage = +e.currentTarget.innerText;
-    const offset = +e.currentTarget.innerText * perPage - 9;
+    const offset = +e.currentTarget.innerText * perPage - 8;
 
     setState((prevState) => ({
       ...prevState,
@@ -102,7 +102,7 @@ const StoreProvider: FC = ({ children }) => {
     setState((prevState) => ({
       ...prevState,
       currentPage: num,
-      offset: num * perPage - 9,
+      offset: num * perPage - 8,
     }));
 
   return (
