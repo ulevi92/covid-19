@@ -13,8 +13,8 @@ const Countries = () => {
     countries,
     onPageClick,
     totalPages,
-    setCurrentPage,
     currentPage,
+    setOffsetAndPage,
   } = useStoreContext();
 
   const navigate = useNavigate();
@@ -25,17 +25,17 @@ const Countries = () => {
   useEffect(() => {
     if (!params.pageNum) {
       navigate("/countries/1");
-      setCurrentPage(1);
+      setOffsetAndPage(1);
     }
 
     if (isMounted.current && +params.pageNum! >= 1) {
-      setCurrentPage(+params.pageNum!);
+      setOffsetAndPage(+params.pageNum!);
     }
 
     return () => {
       isMounted.current = false;
     };
-  }, [currentPage, navigate, params.pageNum, setCurrentPage]);
+  }, [currentPage, navigate, params.pageNum, setOffsetAndPage]);
 
   return (
     <Container>

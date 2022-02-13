@@ -31,7 +31,7 @@ export interface StoreState {
 
 interface ContextProps extends StoreState {
   onPageClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  setCurrentPage: (number: number) => void;
+  setOffsetAndPage: (num: number) => void;
 }
 
 const Context = createContext<ContextProps | null>(null);
@@ -49,7 +49,7 @@ const StoreProvider: FC = ({ children }) => {
 
   const [state, setState] = useState<StoreState>({
     loading: true,
-    perPage: 10,
+    perPage: 9,
     currentPage: 1,
     offset: 0,
     countries: null,
@@ -89,7 +89,7 @@ const StoreProvider: FC = ({ children }) => {
 
   const onPageClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const currentPage = +e.currentTarget.innerText;
-    const offset = +e.currentTarget.innerText * perPage;
+    const offset = +e.currentTarget.innerText * perPage - 9;
 
     setState((prevState) => ({
       ...prevState,
@@ -98,14 +98,15 @@ const StoreProvider: FC = ({ children }) => {
     }));
   };
 
-  const setCurrentPage = (number: number) =>
+  const setOffsetAndPage = (num: number) =>
     setState((prevState) => ({
       ...prevState,
-      currentPage: number,
+      currentPage: num,
+      offset: num * perPage - 9,
     }));
 
   return (
-    <Context.Provider value={{ ...state, onPageClick, setCurrentPage }}>
+    <Context.Provider value={{ ...state, onPageClick, setOffsetAndPage }}>
       {children}
     </Context.Provider>
   );

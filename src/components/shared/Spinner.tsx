@@ -10,7 +10,6 @@ const Spinner = () => {
         display: "flex",
         justifyContent: "center",
         position: "absolute",
-        backgroundColor: "rgba(0,0,0,0.3)",
         alignItems: "center",
       }}
     >

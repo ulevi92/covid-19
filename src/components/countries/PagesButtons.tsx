@@ -8,7 +8,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useNavigate } from "react-router-dom";
 
 const PagesButtons: FC = () => {
-  const { totalPages, currentPage, onPageClick, setCurrentPage } =
+  const { totalPages, currentPage, onPageClick, setOffsetAndPage } =
     useStoreContext();
 
   const navigate = useNavigate();
@@ -56,12 +56,12 @@ const PagesButtons: FC = () => {
   };
 
   const onPrevBtnClick = () => {
-    setCurrentPage(currentPage - 1);
+    setOffsetAndPage(currentPage - 1);
     navigate(`/countries/${currentPage - 1}`);
   };
 
   const onNextBtnClick = () => {
-    setCurrentPage(currentPage + 1);
+    setOffsetAndPage(currentPage + 1);
     navigate(`/countries/${currentPage + 1}`);
   };
 

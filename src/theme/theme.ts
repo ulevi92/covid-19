@@ -1,6 +1,8 @@
 import { createTheme } from "@mui/material/styles";
 
-export let lightTheme = createTheme({});
+export let lightTheme = createTheme({
+  
+});
 
 lightTheme = createTheme(lightTheme, {});
 

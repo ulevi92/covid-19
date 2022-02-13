@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 //import mui components
@@ -55,9 +55,10 @@ const Navbar = () => {
     </Link>
   ));
 
-  const onSwitchModeClick = () =>
-    lightMode ? setLightMode(true) : setLightMode(false);
-
+  const onSwitchModeClick = useCallback(
+    () => (lightMode ? setLightMode(true) : setLightMode(false)),
+    [lightMode, setLightMode]
+  );
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
